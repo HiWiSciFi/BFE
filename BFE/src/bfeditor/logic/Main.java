@@ -66,13 +66,13 @@ public class Main {
 
 		List<Image> icons = new ArrayList<Image>();
 		try {
-			icons.add(ImageIO.read(new File("data/images/icon/256x256.png")));
-			icons.add(ImageIO.read(new File("data/images/icon/128x128.png")));
-			icons.add(ImageIO.read(new File("data/images/icon/96x96.png")));
-			icons.add(ImageIO.read(new File("data/images/icon/64x64.png")));
-			icons.add(ImageIO.read(new File("data/images/icon/48x48.png")));
-			icons.add(ImageIO.read(new File("data/images/icon/32x32.png")));
-			icons.add(ImageIO.read(new File("data/images/icon/16x16.png")));
+			icons.add(ImageIO.read(new File("data/images/icon/16.png")));
+			icons.add(ImageIO.read(new File("data/images/icon/32.png")));
+			icons.add(ImageIO.read(new File("data/images/icon/48.png")));
+			icons.add(ImageIO.read(new File("data/images/icon/64.png")));
+			icons.add(ImageIO.read(new File("data/images/icon/96.png")));
+			icons.add(ImageIO.read(new File("data/images/icon/128.png")));
+			icons.add(ImageIO.read(new File("data/images/icon/256.png")));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
