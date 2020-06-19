@@ -1,7 +1,9 @@
 package bfeditor.io;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +91,28 @@ public class IniLoader {
 		return null;
 	}
 	
-	public void SaveToFile(String plugin, String varname, String value) {
+	ArrayList<ArrayList<String>> valuesToSave = new ArrayList<ArrayList<String>>();
+	
+	public void Save(String plugin, String varname, String value) {
+		int pluginID = -1;
+		for (int i = 0; i < valuesToSave.size(); i++) {
+			if (valuesToSave.get(i).get(0) == plugin) {
+				pluginID = i;
+			}
+		}
+		if (pluginID < 0) {
+			valuesToSave.add(new ArrayList<String>() {private static final long serialVersionUID = 1L;{add(plugin);}});
+			pluginID = valuesToSave.size()-1;
+		}
 		
+	}
+	
+	public void SaveToFile() throws IOException {
+		FileWriter fw = new FileWriter(path);
+		BufferedWriter bw = new BufferedWriter(fw);
+		
+		bw.close();
+		fw.close();
+		valuesToSave.clear();
 	}
 }

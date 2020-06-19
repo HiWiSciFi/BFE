@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 import bfeditor.logic.Interpreter;
+import bfeditor.logic.Main;
 
 public class Hotbar extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -117,7 +118,7 @@ public class Hotbar extends JPanel {
 				}*/
 				
 				String timeText = timeField.getText();
-				String time = "";
+				String time = Main.EMPTY_STRING;
 				for (int i = 0; i < timeText.length(); i++) {
 					char c = timeText.charAt(i);
 					if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9') {

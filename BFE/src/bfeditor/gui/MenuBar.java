@@ -88,6 +88,8 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		JMenu helpMenu = new JMenu("Help");
 		asciiTable = new JMenuItem("ASCII Table");
 		asciiTable.addActionListener(this);
+		asciiTable.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_A, ActionEvent.CTRL_MASK | ActionEvent.ALT_MASK));
 		helpMenu.add(asciiTable);
 		learn = new JMenuItem("Learn BF");
 		learn.addActionListener(this);
@@ -129,7 +131,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 			}
 		} else if (trigger == file_new) {
 			FileSystem.newFile((JFrame) SwingUtilities.getWindowAncestor(this));
-			ew.setContent("");
+			ew.setContent(Main.EMPTY_STRING);
 		} else if (trigger == file_open) {
 			try {
 				String result = FileSystem.openDialog((JFrame) SwingUtilities.getWindowAncestor(this));

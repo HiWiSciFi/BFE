@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
+import bfeditor.logic.Main;
+
 public class MemoryCell extends JPanel {
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +44,7 @@ public class MemoryCell extends JPanel {
 
 	public void setValue(int value) {
 		hex.setText("#" + formatHex(Integer.toHexString(value)));
-		dec.setText("" + value);
+		dec.setText(value + Main.EMPTY_STRING);
 		repaint();
 	}
 
@@ -61,7 +63,7 @@ public class MemoryCell extends JPanel {
 
 	public void setValue(String value) {
 		hex.setText("#" + formatHex(value));
-		dec.setText("" + Integer.parseInt(value, 16));
+		dec.setText(Integer.parseInt(value, 16) + Main.EMPTY_STRING);
 		repaint();
 	}
 	

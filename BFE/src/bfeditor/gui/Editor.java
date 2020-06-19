@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 
+import bfeditor.logic.Main;
+
 public class Editor extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -20,7 +22,7 @@ public class Editor extends JPanel {
 		this.setLayout(new BorderLayout());
 		
 		jta = new JTextArea();
-		jta.setText("");
+		jta.setText(Main.EMPTY_STRING);
 		jta.setBackground(new Color(36, 33, 42));
 		jta.setForeground(new Color(255, 69, 0));
 		
@@ -62,6 +64,6 @@ public class Editor extends JPanel {
 	}
 	
 	public void addCharAtCursor(char toAdd) {
-		jta.insert(toAdd+"", jta.getCaretPosition());
+		jta.insert(toAdd + Main.EMPTY_STRING, jta.getCaretPosition());
 	}
 }

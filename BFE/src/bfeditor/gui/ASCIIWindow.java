@@ -2,18 +2,28 @@ package bfeditor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import bfeditor.logic.Main;
 
 public class ASCIIWindow {
 	
 	private static JFrame frame;
 	private static final int width = 300;
 	private static final int height = 500;
+	
+	private static JTextField inputField = new JTextField();
+	private static JLabel queueResult = new JLabel();
 	
 	private static final String asciiTableStart = "decimal\tASCII\r\n"
 			+ "-----------------------------------------------------\r\n"
@@ -63,6 +73,25 @@ public class ASCIIWindow {
 		JPanel panel = new JPanel();
 		frame.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout());
+		
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new GridLayout(1, 2));
+		
+		inputField.addKeyListener(new KeyAdapter() {
+		    public void keyReleased(KeyEvent e) {
+		        JTextField textField = (JTextField) e.getSource();
+		        String text = textField.getText();
+		        if (text.length() > 0) {
+		        	textField.setText(text.charAt(0) + Main.EMPTY_STRING);
+		        	queueResult.setText((int)text.charAt(0) + Main.EMPTY_STRING);
+		        } else {
+		        	queueResult.setText(Main.EMPTY_STRING);
+		        }
+		    }
+		});
+		topPanel.add(inputField);
+		topPanel.add(queueResult);
+		panel.add(topPanel, BorderLayout.NORTH);
 		
 		JTextArea jta = new JTextArea();
 		jta.setEditable(false);

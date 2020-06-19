@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import bfeditor.logic.Main;
+
 public class Console extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -62,7 +64,7 @@ public class Console extends JPanel {
 	}
 	
 	public void clear() {
-		output.setText("");
+		output.setText(Main.EMPTY_STRING);
 	}
 	
 	public void print(String str) {
@@ -73,38 +75,3 @@ public class Console extends JPanel {
 		output.append(str + "\n");
 	}
 }
-
-/*
-package bfeditor.gui;
-import java.awt.BorderLayout;
-import java.awt.Color;
-
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
-
-public class ConsoleWindow extends JPanel {
-	private static final long serialVersionUID = 1L;
-	
-	JTextArea consoleOut;
-	JTextField jtf;
-	
-	public ConsoleWindow() {
-		super();
-		BorderLayout bl = new BorderLayout();
-		this.setLayout(bl);
-		
-		Console console = new Console();
-		console.setOutputBackground(Color.black);
-		console.setOutputForeground(Color.white);
-		this.add(console, BorderLayout.CENTER);
-		this.setBorder(new EtchedBorder());
-	}
-	
-	public void Log(String message) {
-		consoleOut.append(message);
-	}
-}
-
-*/

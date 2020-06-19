@@ -30,9 +30,13 @@ public class FileSystem {
 	}
 	
 	public static void saveAsDialog(JFrame context, String data) {
-		// File file, String data
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle("Specify a file to save");
+		fileChooser.setDialogTitle("Specify save location");
+		if (currFile == null) {
+			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		} else {
+			fileChooser.setCurrentDirectory(new File(currFile.getAbsolutePath()));
+		}
 
 		int userSelection = fileChooser.showSaveDialog(context);
 
@@ -40,7 +44,7 @@ public class FileSystem {
 			File fileToSave = fileChooser.getSelectedFile();
 			try {
 				saveAs(fileToSave, data);
-				context.setTitle(Main.TITLE_BASE + "\"" + currFile.getAbsolutePath() + "\"");
+				context.setTitle(Main.TITLE_BASE + " \"" + currFile.getAbsolutePath() + "\"");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -58,6 +62,7 @@ public class FileSystem {
 	
 	public static String openDialog(JFrame context) throws IOException {
 		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Specify file to open");
 		if (currFile == null) {
 			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		} else {
@@ -67,7 +72,7 @@ public class FileSystem {
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
 			currFile = selectedFile;
-			context.setTitle(Main.TITLE_BASE + "\"" + selectedFile.getAbsolutePath() + "\"");
+			context.setTitle(Main.TITLE_BASE + " \"" + selectedFile.getAbsolutePath() + "\"");
 			return open(selectedFile);
 		}
 		return Main.NOTHING_SELECTED;
