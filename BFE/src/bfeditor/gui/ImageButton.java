@@ -27,13 +27,13 @@ public class ImageButton extends JComponent {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		setPressedImage(defaultImage);
+		SetPressedImage(defaultImage);
 		
 		addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
             	for (ImageButtonListener c : clickEvents) {
-            		c.preform();
+            		c.Preform();
             	}
             	pressed = true;
             	repaint();
@@ -42,7 +42,7 @@ public class ImageButton extends JComponent {
             @Override
             public void mouseReleased(MouseEvent e) {
             	for (ImageButtonListener c : releaseEvents) {
-            		c.preform();
+            		c.Preform();
             	}
             	pressed = false;
             	repaint();
@@ -50,22 +50,22 @@ public class ImageButton extends JComponent {
         });
 	}
 	
-	public void setPressedImage(Image image) {
+	public void SetPressedImage(Image image) {
 		pressedImage = image;
 	}
 	
-	public void setPressedImage(String path) throws IOException {
+	public void SetPressedImage(String path) throws IOException {
 		defaultImage = ImageIO.read(new File(path));
 	}
 	
 	private ArrayList<ImageButtonListener> clickEvents = new ArrayList<ImageButtonListener>();
 	private ArrayList<ImageButtonListener> releaseEvents = new ArrayList<ImageButtonListener>();
 	
-	public void addClickListener(ImageButtonListener func) {
+	public void AddClickListener(ImageButtonListener func) {
 		clickEvents.add(func);
 	}
 	
-	public void addReleaseListener(ImageButtonListener func) {
+	public void AddReleaseListener(ImageButtonListener func) {
 		releaseEvents.add(func);
 	}
 	

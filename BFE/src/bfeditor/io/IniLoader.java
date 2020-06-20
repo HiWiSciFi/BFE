@@ -55,19 +55,19 @@ public class IniLoader {
         fileContents = lines.toArray(new String[lines.size()]);
 	}
 	
-	public int readInt(String plugin, String varname) {
-		return Integer.parseInt(getVarVal(plugin, varname));
+	public int ReadInt(String plugin, String varname) {
+		return Integer.parseInt(GetVarVal(plugin, varname));
 	}
 	
-	public float readSingle(String plugin, String varname) {
-		return Float.parseFloat(getVarVal(plugin, varname));
+	public float ReadSingle(String plugin, String varname) {
+		return Float.parseFloat(GetVarVal(plugin, varname));
 	}
 	
-	public String readString(String plugin, String varname) {
-		return getVarVal(plugin, varname);
+	public String ReadString(String plugin, String varname) {
+		return GetVarVal(plugin, varname);
 	}
 	
-	private String getVarVal(String plugin, String varname) {
+	private String GetVarVal(String plugin, String varname) {
 		System.out.println(plugin + ":" + varname);
 		
 		String currPlugin = null;
@@ -108,7 +108,7 @@ public class IniLoader {
 		return null;
 	}
 	
-	public void save(String plugin, String varname, String value) {
+	public void Save(String plugin, String varname, String value) {
 		int pluginID = -1;
 		for (int i = 0; i < valuesToSave.size(); i++) {
 			if (valuesToSave.get(i).get(0) == plugin) {
@@ -131,7 +131,7 @@ public class IniLoader {
 		}
 	}
 	
-	public void saveToFile() throws IOException {
+	public void SaveToFile() throws IOException {
 		FileWriter fw = new FileWriter(path);
 		BufferedWriter bw = new BufferedWriter(fw);
 		for (int p = 0; p < valuesToSave.size(); p++) {

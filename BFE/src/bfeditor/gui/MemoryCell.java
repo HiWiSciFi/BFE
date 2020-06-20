@@ -38,17 +38,17 @@ public class MemoryCell extends JPanel {
 		this.setSize(new Dimension(50, 50));
 		this.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		
-		setValue(0);
-		unselect();
+		SetValue(0);
+		Unselect();
 	}
 
-	public void setValue(int value) {
-		hex.setText("#" + formatHex(Integer.toHexString(value)));
+	public void SetValue(int value) {
+		hex.setText("#" + FormatHex(Integer.toHexString(value)));
 		dec.setText(value + Main.EMPTY_STRING);
 		repaint();
 	}
 
-	private String formatHex(String hex) {
+	private String FormatHex(String hex) {
 		switch (hex.length()) {
 		case 0:
 			return "000";
@@ -61,8 +61,8 @@ public class MemoryCell extends JPanel {
 		}
 	}
 
-	public void setValue(String value) {
-		hex.setText("#" + formatHex(value));
+	public void SetValue(String value) {
+		hex.setText("#" + FormatHex(value));
 		dec.setText(Integer.parseInt(value, 16) + Main.EMPTY_STRING);
 		repaint();
 	}
@@ -73,13 +73,13 @@ public class MemoryCell extends JPanel {
 	private static final Color selectedFgColor = new Color(0, 0, 0);
 	private static final Color selectedBgColor = new Color(255, 255, 0);
 	
-	public void select() {
+	public void Select() {
 		setBackground(selectedBgColor);
 		setForeground(selectedFgColor);
 		repaint();
 	}
 	
-	public void unselect() {
+	public void Unselect() {
 		setBackground(unselectedBgColor);
 		setForeground(unselectedFgColor);
 		repaint();

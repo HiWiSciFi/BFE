@@ -16,20 +16,20 @@ public class FileSystem {
 	
 	private static File currFile = null;
 	
-	public static void newFile(JFrame context) {
+	public static void NewFile(JFrame context) {
 		currFile = null;
 		context.setTitle(Main.TITLE_BASE);
 	}
 	
-	public static void save(JFrame context, String data) throws IOException  {
+	public static void Save(JFrame context, String data) throws IOException  {
 		if (currFile == null) {
-			saveAsDialog(context, data);
+			SaveAsDialog(context, data);
 		} else {
-			saveAs(currFile, data);
+			SaveAs(currFile, data);
 		}
 	}
 	
-	public static void saveAsDialog(JFrame context, String data) {
+	public static void SaveAsDialog(JFrame context, String data) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Specify save location");
 		if (currFile == null) {
@@ -43,7 +43,7 @@ public class FileSystem {
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
 			File fileToSave = fileChooser.getSelectedFile();
 			try {
-				saveAs(fileToSave, data);
+				SaveAs(fileToSave, data);
 				context.setTitle(Main.TITLE_BASE + " \"" + currFile.getAbsolutePath() + "\"");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -51,7 +51,7 @@ public class FileSystem {
 		}
 	}
 	
-	private static void saveAs(File file, String data) throws IOException {
+	private static void SaveAs(File file, String data) throws IOException {
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(data);
@@ -60,7 +60,7 @@ public class FileSystem {
 		currFile = file;
 	}
 	
-	public static String openDialog(JFrame context) throws IOException {
+	public static String OpenDialog(JFrame context) throws IOException {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Specify file to open");
 		if (currFile == null) {
@@ -73,12 +73,12 @@ public class FileSystem {
 			File selectedFile = fileChooser.getSelectedFile();
 			currFile = selectedFile;
 			context.setTitle(Main.TITLE_BASE + " \"" + selectedFile.getAbsolutePath() + "\"");
-			return open(selectedFile);
+			return Open(selectedFile);
 		}
 		return Main.NOTHING_SELECTED;
 	}
 	
-	private static String open(File file) throws IOException {
+	private static String Open(File file) throws IOException {
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
 		StringBuilder sb = new StringBuilder();

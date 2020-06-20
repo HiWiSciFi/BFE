@@ -35,11 +35,11 @@ public class Hotbar extends JPanel {
 		
 		try {
 			playB = new ImageButton("data/images/Play.png");
-			playB.setPressedImage("data/images/Play_pressed.png");
+			playB.SetPressedImage("data/images/Play_pressed.png");
 			stopB = new ImageButton("data/images/Stop.png");
-			stopB.setPressedImage("data/images/Stop_pressed.png");
+			stopB.SetPressedImage("data/images/Stop_pressed.png");
 			stepB = new ImageButton("data/images/Step.png");
-			stepB.setPressedImage("data/images/Step_pressed.png");
+			stepB.SetPressedImage("data/images/Step_pressed.png");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,7 +52,7 @@ public class Hotbar extends JPanel {
 		hotButtonsPane.setLayout(fl);
 		this.add(hotButtonsPane, BorderLayout.WEST);
 		
-		playB.addClickListener(new ImageButtonListener() { @Override public void preform() { playBPressed(); }});
+		playB.AddClickListener(new ImageButtonListener() { @Override public void Preform() { PlayBPressed(); }});
 		hotButtonsPane.add(playB);
 		
 		// Time input
@@ -66,10 +66,10 @@ public class Hotbar extends JPanel {
 		});
 		hotButtonsPane.add(timeField);
 		
-		stopB.addClickListener(new ImageButtonListener() { @Override public void preform() { stopBPressed(); }});
+		stopB.AddClickListener(new ImageButtonListener() { @Override public void Preform() { StopBPressed(); }});
 		hotButtonsPane.add(stopB);
 		
-		stepB.addClickListener(new ImageButtonListener() { @Override public void preform() { stepBPressed(); }});
+		stepB.AddClickListener(new ImageButtonListener() { @Override public void Preform() { StepBPressed(); }});
 		hotButtonsPane.add(stepB);
 		
 		// Find/Replace
@@ -107,12 +107,12 @@ public class Hotbar extends JPanel {
 	
 	// +++++[->+++++<]+++++[->++<]>.
 	Interpreter interpret = null;
-	public void playBPressed() {
+	public void PlayBPressed() {
 		System.out.println("Executing code");
 		try {
 			interpret = new Interpreter(c, ew);
-			System.out.println(ew.getCode());
-			if (interpret.executeCode(ew.getCode()) == 0) {
+			System.out.println(ew.GetCode());
+			if (interpret.ExecuteCode(ew.GetCode()) == 0) {
 				/*while (interpret.NextStep() != 1) {
 					Thread.sleep(1000);
 				}*/
@@ -137,13 +137,13 @@ public class Hotbar extends JPanel {
 		}
 	}
 	
-	public void stopBPressed() {
-		interpret.stopExecuting();
+	public void StopBPressed() {
+		interpret.StopExecuting();
 	}
 	
-	public void stepBPressed() {
+	public void StepBPressed() {
 		if (interpret != null) {
-			interpret.nextStep();
+			interpret.NextStep();
 		}
 	}
 }

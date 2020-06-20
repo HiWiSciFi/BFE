@@ -23,7 +23,7 @@ public class About {
 			+ "This project has been made and distributed as part of a school task during the IT lesson.\r\n"
 			+ "This program is not going to be ported to other platforms or another programming language by the original author.";
 	
-	public static void init() {
+	public static void Init() {
 		frame = new JFrame("About");
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setResizable(false);
@@ -43,7 +43,7 @@ public class About {
 		frame.pack();
 	}
 	
-	public static void show() {
+	public static void Show() {
 		if (frame.isVisible()) {
 			frame.toFront();
 			frame.requestFocus();

@@ -104,13 +104,13 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object trigger = e.getSource();
 		if (trigger == preferences) {
-			Preferences.show();
+			Preferences.Show();
 		} else if (trigger == openDbg) {
-			MemoryInsight.show();
+			MemoryInsight.Show();
 		} else if (trigger == asciiTable) {
-			ASCIITable.show();
+			ASCIITable.Show();
 		} else if (trigger == about) {
-			About.show();
+			About.Show();
 		} else if (trigger == learn) {
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				try {
@@ -122,37 +122,37 @@ public class MenuBar extends JMenuBar implements ActionListener {
 				}
 			}
 		} else if (trigger == file_saveas) {
-			FileSystem.saveAsDialog((JFrame) SwingUtilities.getWindowAncestor(this), ew.getCode());
+			FileSystem.SaveAsDialog((JFrame) SwingUtilities.getWindowAncestor(this), ew.GetCode());
 		} else if (trigger == file_save) {
 			try {
-				FileSystem.save((JFrame) SwingUtilities.getWindowAncestor(this), ew.getCode());
+				FileSystem.Save((JFrame) SwingUtilities.getWindowAncestor(this), ew.GetCode());
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		} else if (trigger == file_new) {
-			FileSystem.newFile((JFrame) SwingUtilities.getWindowAncestor(this));
-			ew.setContent(Main.EMPTY_STRING);
+			FileSystem.NewFile((JFrame) SwingUtilities.getWindowAncestor(this));
+			ew.SetContent(Main.EMPTY_STRING);
 		} else if (trigger == file_open) {
 			try {
-				String result = FileSystem.openDialog((JFrame) SwingUtilities.getWindowAncestor(this));
+				String result = FileSystem.OpenDialog((JFrame) SwingUtilities.getWindowAncestor(this));
 				if (result != Main.NOTHING_SELECTED) {
-					ew.setContent(result);
+					ew.SetContent(result);
 				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		} else if (trigger == addBrkP) {
-			ew.addCharAtCursor(Main.BREAKPOINT_CHARACTER);
+			ew.AddCharAtCursor(Main.BREAKPOINT_CHARACTER);
 		} else if (trigger == rmAllBrkP) {
 			StringBuilder content = new StringBuilder();
-			content.append(ew.getCode());
+			content.append(ew.GetCode());
 			for (int i = content.length()-1; i >= 0; i--) {
 				char curr = content.charAt(i);
 				if (curr == Main.BREAKPOINT_CHARACTER) {
 					content.deleteCharAt(i);
 				}
 			}
-			ew.setContent(content.toString());
+			ew.SetContent(content.toString());
 		}
 	}
 }

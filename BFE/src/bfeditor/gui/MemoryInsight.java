@@ -17,7 +17,7 @@ public class MemoryInsight {
 	
 	private static ArrayList<MemoryCell> cells = new ArrayList<MemoryCell>();
 	
-	public static void init() {
+	public static void Init() {
 		frame = new JFrame("Memory");
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setResizable(true);
@@ -26,10 +26,10 @@ public class MemoryInsight {
 		frame.setSize(width, height);
 		panel = new JPanel();
 		frame.add(panel);
-		clear();
+		Clear();
 	}
 	
-	public static void show() {
+	public static void Show() {
 		if (frame.isVisible()) {
 			frame.toFront();
 			frame.requestFocus();
@@ -40,37 +40,37 @@ public class MemoryInsight {
 		frame.pack();
 	}
 	
-	public static void clear() {
+	public static void Clear() {
 		panel.removeAll();
 		cells.clear();
-		addMemoryCell();
-		selectMemoryCell(cells.size()-1);
+		AddMemoryCell();
+		SelectMemoryCell(cells.size()-1);
 	}
 	
-	public static void addMemoryCell() {
+	public static void AddMemoryCell() {
 		MemoryCell mc = new MemoryCell();
-		mc.setValue(0);
+		mc.SetValue(0);
 		panel.add(mc);
 		cells.add(mc);
 		frame.pack();
 		frame.repaint();
 	}
 	
-	public static void setMemoryCell(int index, int value) {
+	public static void SetMemoryCell(int index, int value) {
 		MemoryCell element = cells.get(index);
-		element.setValue(value);
+		element.SetValue(value);
 		cells.set(index, element);
 		frame.pack();
 		frame.repaint();
 	}
 	
-	public static void selectMemoryCell(int index) {
+	public static void SelectMemoryCell(int index) {
 		for (int i = 0; i < cells.size(); i++) {
 			MemoryCell mc = cells.get(i);
 			if (i == index) {
-				mc.select();
+				mc.Select();
 			} else {
-				mc.unselect();
+				mc.Unselect();
 			}
 			cells.set(i, mc);
 		}

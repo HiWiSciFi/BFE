@@ -18,18 +18,18 @@ public class Interpreter {
 	private Console c;
 	private Editor e;
 	
-	private class queuedStep extends TimerTask {
+	private class QueuedStep extends TimerTask {
 		@Override
 		public void run() {
-			if (nextStep() == 0) {
-				timer.schedule(new queuedStep(), delay);
+			if (NextStep() == 0) {
+				timer.schedule(new QueuedStep(), delay);
 			} else {
-				stopExecuting();
+				StopExecuting();
 			}
 		}
 	};
 	
-	public TimerTask tt = new queuedStep();
+	public TimerTask tt = new QueuedStep();
 	public Timer timer = new Timer();
 	
 	public Interpreter(Console c, Editor e) {
@@ -37,14 +37,14 @@ public class Interpreter {
 		this.e = e;
 	}
 	
-	public void stopExecuting() {
+	public void StopExecuting() {
 		timer.cancel();
 		timer.purge();
-		e.setContent(code);
-		e.setBlocked(false);
+		e.SetContent(code);
+		e.SetBlocked(false);
 	}
 	
-	public int executeCode(String code) {
+	public int ExecuteCode(String code) {
 		if (code.length() < 1) {
 			return 2;
 		}
@@ -73,32 +73,32 @@ public class Interpreter {
 		}
 		
 		instructionPointer = 0;
-		e.setBlocked(true);
-		MemoryInsight.clear();
+		e.SetBlocked(true);
+		MemoryInsight.Clear();
 		return 0;
 	}
 	
-	private void setCursorPosition(int pos) {
+	private void SetCursorPosition(int pos) {
 		StringBuffer toPush = new StringBuffer(code);
 		toPush.insert(pos, Main.EXEC_INDICATOR);
-		e.setContent(toPush.toString());
+		e.SetContent(toPush.toString());
 	}
 	
-	public int nextStep() {
+	public int NextStep() {
 		boolean done = true;
 		do {
 			done = true;
-			setCursorPosition(instructionPointer+1);
+			SetCursorPosition(instructionPointer+1);
 			char instruction = code.charAt(instructionPointer);
 			if (instruction == '+') {
 				// + increment cell by one
 				data.set(dataPointer, (char) (data.get(dataPointer).charValue() + 1));
-				MemoryInsight.setMemoryCell(dataPointer, data.get(dataPointer).charValue());
+				MemoryInsight.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
 				
 			} else if (instruction == '-') {
 				// - decrement cell by one
 				data.set(dataPointer, (char) (data.get(dataPointer).charValue() - 1));
-				MemoryInsight.setMemoryCell(dataPointer, data.get(dataPointer).charValue());
+				MemoryInsight.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
 				
 			} else if (instruction == '<') {
 				// < decrement dataPointer by one
@@ -106,21 +106,21 @@ public class Interpreter {
 				if (dataPointer < 0) {
 					return 2;
 				}
-				MemoryInsight.selectMemoryCell(dataPointer);
+				MemoryInsight.SelectMemoryCell(dataPointer);
 				
 			} else if (instruction == '>') {
 				// > increment dataPointer by one
 				dataPointer++;
 				if (dataPointer >= data.size()) {
 					data.add((char) 0);
-					MemoryInsight.addMemoryCell();
+					MemoryInsight.AddMemoryCell();
 				}
-				MemoryInsight.selectMemoryCell(dataPointer);
+				MemoryInsight.SelectMemoryCell(dataPointer);
 				
 			} else if (instruction == '.') {
 				// . output current cell as ASCII
 				System.out.print(data.get(dataPointer));
-				c.print(data.get(dataPointer).toString());
+				c.Print(data.get(dataPointer).toString());
 				System.out.print("[" + (int)data.get(dataPointer) + "]");
 				
 			} else if (instruction == ',') {
@@ -167,7 +167,7 @@ public class Interpreter {
 			
 			instructionPointer++;
 			if (instructionPointer >= code.length()) {
-				stopExecuting();
+				StopExecuting();
 				return 1;
 			}
 		} while (!done);

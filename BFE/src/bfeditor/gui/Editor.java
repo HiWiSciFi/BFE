@@ -51,19 +51,19 @@ public class Editor extends JPanel {
 		});
 	}
 	
-	public void setContent(String content) {
+	public void SetContent(String content) {
 		jta.setText(content);
 	}
 	
-	public void setBlocked(boolean state) {
+	public void SetBlocked(boolean state) {
 		jta.setEditable(!state);
 	}
 	
-	public String getCode() {
+	public String GetCode() {
 		return jta.getText();
 	}
 	
-	public void addCharAtCursor(char toAdd) {
+	public void AddCharAtCursor(char toAdd) {
 		jta.insert(toAdd + Main.EMPTY_STRING, jta.getCaretPosition());
 	}
 }

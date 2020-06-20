@@ -50,28 +50,28 @@ public class Console extends JPanel {
 		});
 	}
 	
-	public void setOutputBackground(Color c) {
+	public void SetOutputBackground(Color c) {
 		output.setBackground(c);
 	}
 	
-	public void setOutputForeground(Color c) {
+	public void SetOutputForeground(Color c) {
 		output.setForeground(c);
 	}
 	
-	public void setOutputColorScheme(Color background, Color foreground) {
-		setOutputBackground(background);
-		setOutputForeground(foreground);
+	public void SetOutputColorScheme(Color background, Color foreground) {
+		SetOutputBackground(background);
+		SetOutputForeground(foreground);
 	}
 	
-	public void clear() {
+	public void Clear() {
 		output.setText(Main.EMPTY_STRING);
 	}
 	
-	public void print(String str) {
+	public void Print(String str) {
 		output.append(str);
 	}
 	
-	public void println(String str) {
+	public void Println(String str) {
 		output.append(str + "\n");
 	}
 }

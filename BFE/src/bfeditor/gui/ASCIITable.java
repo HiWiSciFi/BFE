@@ -62,7 +62,7 @@ public class ASCIITable {
 			+ "32\tSPACE\r\n";
 	private static final String asciiTableEnd = "127\tDEL";
 	
-	public static void init() {
+	public static void Init() {
 		frame = new JFrame("ASCII Table");
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setResizable(true);
@@ -108,7 +108,7 @@ public class ASCIITable {
 		panel.add(jsp, BorderLayout.CENTER);
 	}
 	
-	public static void show() {
+	public static void Show() {
 		if (frame.isVisible()) {
 			frame.toFront();
 			frame.requestFocus();

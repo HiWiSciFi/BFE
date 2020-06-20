@@ -12,18 +12,18 @@ public class Preferences {
 	private static int width = 300;
 	private static int height = 300;
 	
-	public static void init() {
+	public static void Init() {
 		frame = new JFrame("Preferences");
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setResizable(true);
 		Point screenCenter = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
 		frame.setLocation(screenCenter.x - (width/2), screenCenter.y - (height/2));
 		frame.setSize(width, height);
-		loadPrefs();
+		LoadPrefs();
 		
 	}
 	
-	public static void show() {
+	public static void Show() {
 		if (frame.isVisible()) {
 			frame.toFront();
 			frame.requestFocus();
@@ -32,11 +32,11 @@ public class Preferences {
 		}
 	}
 	
-	public static void savePrefs() {
+	public static void SavePrefs() {
 		
 	}
 	
-	public static void loadPrefs() {
+	public static void LoadPrefs() {
 		
 	}
 }

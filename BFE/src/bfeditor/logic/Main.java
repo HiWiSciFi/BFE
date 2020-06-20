@@ -47,10 +47,10 @@ public class Main {
 	private static final String pluginIniName = "BFE";
 
 	public static void main(String[] args) {
-		Preferences.init();
-		MemoryInsight.init();
-		ASCIITable.init();
-		About.init();
+		Preferences.Init();
+		MemoryInsight.Init();
+		ASCIITable.Init();
+		About.Init();
 
 		try {
 			prefsFile = new IniLoader("data/prefs.ini");
@@ -84,9 +84,9 @@ public class Main {
 
 		Editor ew = new Editor();
 		Console c = new Console();
-		c.setOutputColorScheme(Color.black, Color.white);
+		c.SetOutputColorScheme(Color.black, Color.white);
 		Hotbar hotbar = new Hotbar(
-				new Dimension(width, (int) (height * prefsFile.readSingle(pluginIniName, "HotbarVerticalPercentage"))),
+				new Dimension(width, (int) (height * prefsFile.ReadSingle(pluginIniName, "HotbarVerticalPercentage"))),
 				ew, c);
 		
 		MenuBar menuBar = new MenuBar(ew);
@@ -102,10 +102,10 @@ public class Main {
 				width = frame.getWidth();
 				height = frame.getHeight();
 				c.setPreferredSize(new Dimension(
-						(int) (width * prefsFile.readSingle(pluginIniName, "ConsoleHorizontalPercentage")),
-						height - ((int) (height * prefsFile.readSingle(pluginIniName, "HotbarVerticalPercentage")))));
+						(int) (width * prefsFile.ReadSingle(pluginIniName, "ConsoleHorizontalPercentage")),
+						height - ((int) (height * prefsFile.ReadSingle(pluginIniName, "HotbarVerticalPercentage")))));
 				hotbar.setPreferredSize(new Dimension(width,
-						(int) (height * prefsFile.readSingle(pluginIniName, "HotbarVerticalPercentage"))));
+						(int) (height * prefsFile.ReadSingle(pluginIniName, "HotbarVerticalPercentage"))));
 				SwingUtilities.updateComponentTreeUI(frame);
 			}
 		});

@@ -4,5 +4,5 @@ public abstract class ImageButtonListener {
 	
 	public ImageButtonListener() {}
 	
-	abstract void preform();
+	abstract void Preform();
 }
