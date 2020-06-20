@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 
 import bfeditor.logic.Main;
 
-public class AboutWindow {
+public class About {
 	
 	private static JFrame frame;
 	private static final int width = 300;

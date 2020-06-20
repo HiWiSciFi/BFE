@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import bfeditor.gui.Console;
-import bfeditor.gui.MemoryWindow;
+import bfeditor.gui.MemoryInsight;
 import bfeditor.gui.Editor;
 
 public class Interpreter {
@@ -74,7 +74,7 @@ public class Interpreter {
 		
 		instructionPointer = 0;
 		e.setBlocked(true);
-		MemoryWindow.clear();
+		MemoryInsight.clear();
 		return 0;
 	}
 	
@@ -93,12 +93,12 @@ public class Interpreter {
 			if (instruction == '+') {
 				// + increment cell by one
 				data.set(dataPointer, (char) (data.get(dataPointer).charValue() + 1));
-				MemoryWindow.setMemoryCell(dataPointer, data.get(dataPointer).charValue());
+				MemoryInsight.setMemoryCell(dataPointer, data.get(dataPointer).charValue());
 				
 			} else if (instruction == '-') {
 				// - decrement cell by one
 				data.set(dataPointer, (char) (data.get(dataPointer).charValue() - 1));
-				MemoryWindow.setMemoryCell(dataPointer, data.get(dataPointer).charValue());
+				MemoryInsight.setMemoryCell(dataPointer, data.get(dataPointer).charValue());
 				
 			} else if (instruction == '<') {
 				// < decrement dataPointer by one
@@ -106,16 +106,16 @@ public class Interpreter {
 				if (dataPointer < 0) {
 					return 2;
 				}
-				MemoryWindow.selectMemoryCell(dataPointer);
+				MemoryInsight.selectMemoryCell(dataPointer);
 				
 			} else if (instruction == '>') {
 				// > increment dataPointer by one
 				dataPointer++;
 				if (dataPointer >= data.size()) {
 					data.add((char) 0);
-					MemoryWindow.addMemoryCell();
+					MemoryInsight.addMemoryCell();
 				}
-				MemoryWindow.selectMemoryCell(dataPointer);
+				MemoryInsight.selectMemoryCell(dataPointer);
 				
 			} else if (instruction == '.') {
 				// . output current cell as ASCII

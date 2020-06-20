@@ -17,10 +17,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import bfeditor.gui.ASCIIWindow;
-import bfeditor.gui.AboutWindow;
+import bfeditor.gui.ASCIITable;
+import bfeditor.gui.About;
 import bfeditor.gui.Console;
-import bfeditor.gui.MemoryWindow;
+import bfeditor.gui.MemoryInsight;
 import bfeditor.gui.Editor;
 import bfeditor.gui.Hotbar;
 import bfeditor.gui.MenuBar;
@@ -48,9 +48,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		Preferences.init();
-		MemoryWindow.init();
-		ASCIIWindow.init();
-		AboutWindow.init();
+		MemoryInsight.init();
+		ASCIITable.init();
+		About.init();
 
 		try {
 			prefsFile = new IniLoader("data/prefs.ini");

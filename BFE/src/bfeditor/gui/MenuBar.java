@@ -106,11 +106,11 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		if (trigger == preferences) {
 			Preferences.show();
 		} else if (trigger == openDbg) {
-			MemoryWindow.show();
+			MemoryInsight.show();
 		} else if (trigger == asciiTable) {
-			ASCIIWindow.show();
+			ASCIITable.show();
 		} else if (trigger == about) {
-			AboutWindow.show();
+			About.show();
 		} else if (trigger == learn) {
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				try {

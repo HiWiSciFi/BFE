@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 import bfeditor.logic.Main;
 
-public class ASCIIWindow {
+public class ASCIITable {
 	
 	private static JFrame frame;
 	private static final int width = 300;

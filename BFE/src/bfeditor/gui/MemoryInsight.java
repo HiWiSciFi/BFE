@@ -7,7 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MemoryWindow {
+public class MemoryInsight {
 	
 	private static JFrame frame;
 	private static JPanel panel;
