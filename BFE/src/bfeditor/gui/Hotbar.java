@@ -112,7 +112,7 @@ public class Hotbar extends JPanel {
 		try {
 			interpret = new Interpreter(c, ew);
 			System.out.println(ew.getCode());
-			if (interpret.ExecuteCode(ew.getCode()) == 0) {
+			if (interpret.executeCode(ew.getCode()) == 0) {
 				/*while (interpret.NextStep() != 1) {
 					Thread.sleep(1000);
 				}*/
@@ -143,7 +143,7 @@ public class Hotbar extends JPanel {
 	
 	public void stepBPressed() {
 		if (interpret != null) {
-			interpret.NextStep();
+			interpret.nextStep();
 		}
 	}
 }

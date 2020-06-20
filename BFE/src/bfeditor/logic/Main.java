@@ -33,12 +33,13 @@ public class Main {
 	public static final String NOTHING_SELECTED = "8e3242f8-23f5-4c28-b25b-ab802725d71a";
 	public static final char BREAKPOINT_CHARACTER = '!';
 	public static final String EMPTY_STRING = "";
+	public static final String EXEC_INDICATOR = "|";
+	public static final String TITLE_BASE = "Brainf*** Editor";
 	
 	// +++++[->++<]>[-<++++++>]<+++++.
 
 	private static JFrame frame;
-
-	public static final String TITLE_BASE = "Brainf*** Editor";
+	
 	private static int width = 800;
 	private static int height = 500;
 

@@ -21,7 +21,7 @@ public class Interpreter {
 	private class queuedStep extends TimerTask {
 		@Override
 		public void run() {
-			if (NextStep() == 0) {
+			if (nextStep() == 0) {
 				timer.schedule(new queuedStep(), delay);
 			} else {
 				stopExecuting();
@@ -44,7 +44,7 @@ public class Interpreter {
 		e.setBlocked(false);
 	}
 	
-	public int ExecuteCode(String code) {
+	public int executeCode(String code) {
 		if (code.length() < 1) {
 			return 2;
 		}
@@ -75,17 +75,16 @@ public class Interpreter {
 		instructionPointer = 0;
 		e.setBlocked(true);
 		MemoryWindow.clear();
-		MemoryWindow.selectMemoryCell(0);
 		return 0;
 	}
 	
 	private void setCursorPosition(int pos) {
 		StringBuffer toPush = new StringBuffer(code);
-		toPush.insert(pos, '|');
+		toPush.insert(pos, Main.EXEC_INDICATOR);
 		e.setContent(toPush.toString());
 	}
 	
-	public int NextStep() {
+	public int nextStep() {
 		boolean done = true;
 		do {
 			done = true;
