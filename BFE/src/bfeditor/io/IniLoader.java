@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bfeditor.logic.Main;
-
 /*
  * .ini system
  * 
@@ -34,7 +32,6 @@ public class IniLoader {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         List<String> lines = new ArrayList<String>();
         String line = null;
-        String currPl = Main.EMPTY_STRING;
         int currPlID = 0;
         valuesToSave.clear();
         while ((line = bufferedReader.readLine()) != null) {
@@ -48,7 +45,6 @@ public class IniLoader {
             			sb.append(line.charAt(i));
             		}
             	}
-            	currPl = sb.toString();
             	valuesToSave.add(new ArrayList<String>() {private static final long serialVersionUID = 1L;{add(sb.toString());}});
             	currPlID = valuesToSave.size()-1;
             } else {

@@ -78,8 +78,10 @@ public class ASCIIWindow {
 		topPanel.setLayout(new GridLayout(1, 2));
 		
 		inputField.addKeyListener(new KeyAdapter() {
-		    public void keyReleased(KeyEvent e) {
-		        JTextField textField = (JTextField) e.getSource();
+		    public void keyPressed(KeyEvent e) { adjustContent(e); }
+		    public void keyReleased(KeyEvent e) { adjustContent(e); }
+		    private void adjustContent(KeyEvent e) {
+		    	JTextField textField = (JTextField) e.getSource();
 		        String text = textField.getText();
 		        if (text.length() > 0) {
 		        	textField.setText(text.charAt(0) + Main.EMPTY_STRING);
