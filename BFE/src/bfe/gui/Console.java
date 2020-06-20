@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import bfeditor.logic.Main;
+import bfe.logic.Main;
 
 public class Console extends JPanel {
 	private static final long serialVersionUID = 1L;

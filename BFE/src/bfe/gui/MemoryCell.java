@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import bfeditor.logic.Main;
+import bfe.logic.Main;
 
 public class MemoryCell extends JPanel {
 	private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package bfeditor.io;
+package bfe.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-import bfeditor.logic.Main;
+import bfe.logic.Main;
 
 public class FileSystem {
 	

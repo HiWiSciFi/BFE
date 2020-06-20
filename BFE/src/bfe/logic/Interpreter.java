@@ -1,12 +1,12 @@
-package bfeditor.logic;
+package bfe.logic;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import bfeditor.gui.Console;
-import bfeditor.gui.MemoryInsight;
-import bfeditor.gui.Editor;
+import bfe.gui.Console;
+import bfe.gui.Editor;
+import bfe.gui.MemoryInsight;
 
 public class Interpreter {
 	

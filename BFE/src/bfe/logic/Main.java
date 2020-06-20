@@ -1,4 +1,4 @@
-package bfeditor.logic;
+package bfe.logic;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,15 +17,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import bfeditor.gui.ASCIITable;
-import bfeditor.gui.About;
-import bfeditor.gui.Console;
-import bfeditor.gui.MemoryInsight;
-import bfeditor.gui.Editor;
-import bfeditor.gui.Hotbar;
-import bfeditor.gui.MenuBar;
-import bfeditor.gui.Preferences;
-import bfeditor.io.IniLoader;
+import bfe.gui.ASCIITable;
+import bfe.gui.About;
+import bfe.gui.Console;
+import bfe.gui.Editor;
+import bfe.gui.Hotbar;
+import bfe.gui.MemoryInsight;
+import bfe.gui.MenuBar;
+import bfe.gui.Preferences;
+import bfe.io.IniLoader;
 
 public class Main {
 	

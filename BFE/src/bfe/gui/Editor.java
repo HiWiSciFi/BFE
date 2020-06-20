@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 
-import bfeditor.logic.Main;
+import bfe.logic.Main;
 
 public class Editor extends JPanel {
 	private static final long serialVersionUID = 1L;

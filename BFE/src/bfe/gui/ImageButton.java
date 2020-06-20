@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

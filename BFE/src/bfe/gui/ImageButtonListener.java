@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 
 public abstract class ImageButtonListener {
 	

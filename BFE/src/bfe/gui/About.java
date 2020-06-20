@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import bfeditor.logic.Main;
+import bfe.logic.Main;
 
 public class About {
 	

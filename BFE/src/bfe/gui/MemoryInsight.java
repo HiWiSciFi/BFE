@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.util.ArrayList;

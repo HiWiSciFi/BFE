@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
@@ -14,8 +14,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import bfeditor.io.FileSystem;
-import bfeditor.logic.Main;
+import bfe.io.FileSystem;
+import bfe.logic.Main;
 
 public class MenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = 1L;

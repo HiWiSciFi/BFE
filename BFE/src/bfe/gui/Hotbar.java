@@ -1,4 +1,4 @@
-package bfeditor.gui;
+package bfe.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
-import bfeditor.logic.Interpreter;
-import bfeditor.logic.Main;
+import bfe.logic.Interpreter;
+import bfe.logic.Main;
 
 public class Hotbar extends JPanel {
 	private static final long serialVersionUID = 1L;
