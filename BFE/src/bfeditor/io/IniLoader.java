@@ -108,7 +108,7 @@ public class IniLoader {
 		return null;
 	}
 	
-	public void Save(String plugin, String varname, String value) {
+	public void save(String plugin, String varname, String value) {
 		int pluginID = -1;
 		for (int i = 0; i < valuesToSave.size(); i++) {
 			if (valuesToSave.get(i).get(0) == plugin) {
@@ -131,7 +131,7 @@ public class IniLoader {
 		}
 	}
 	
-	public void SaveToFile() throws IOException {
+	public void saveToFile() throws IOException {
 		FileWriter fw = new FileWriter(path);
 		BufferedWriter bw = new BufferedWriter(fw);
 		for (int p = 0; p < valuesToSave.size(); p++) {
