@@ -95,8 +95,14 @@ public class Hotbar extends JPanel {
 		JTextField findField = new JTextField();
 		findField.addKeyListener(new KeyListener() {
 			@Override public void keyTyped(KeyEvent e) {}
-			@Override public void keyPressed(KeyEvent e) { updateUI(); }
-			@Override public void keyReleased(KeyEvent e) { updateUI(); }
+			@Override public void keyPressed(KeyEvent e) {
+				HighlightString(findField.getText());
+				updateUI();
+			}
+			@Override public void keyReleased(KeyEvent e) {
+				HighlightString(findField.getText());
+				updateUI();
+			}
 		});
 		frPane.add(findField);
 		
@@ -115,6 +121,10 @@ public class Hotbar extends JPanel {
 				SwingUtilities.updateComponentTreeUI((JPanel) e.getSource());
 			}
 		});
+	}
+	
+	private void HighlightString(String query) {
+		ew.HighlightString(query);
 	}
 	
 	private Interpreter interpret = null;
