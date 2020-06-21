@@ -36,7 +36,7 @@ public class Interpreter {
 		this.editor = editor;
 		this.delay = delay;
 		code = editor.GetCode();
-		if (code.length() <= 0) { successful = false; }
+		if (code.length() <= 0) { successful = false; return; }
 		
 		//reset variables
 		dataPointer = 0;

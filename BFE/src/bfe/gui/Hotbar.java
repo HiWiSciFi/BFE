@@ -8,7 +8,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -100,8 +99,6 @@ public class Hotbar extends JPanel {
 			@Override public void keyReleased(KeyEvent e) { updateUI(); }
 		});
 		frPane.add(findField);
-		JButton findButton = new JButton("Find Next");
-		frPane.add(findButton);
 		
 		this.setBorder(new EtchedBorder());
 		
@@ -115,7 +112,6 @@ public class Hotbar extends JPanel {
 				timeField.setFont(new Font(timeField.getFont().getFontName(), timeField.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
 				findLabel.setFont(new Font(findLabel.getFont().getFontName(), findLabel.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
 				findField.setFont(new Font(findField.getFont().getName(), findField.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
-				findButton.setFont(new Font(findButton.getFont().getName(), findButton.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
 				SwingUtilities.updateComponentTreeUI((JPanel) e.getSource());
 			}
 		});
@@ -130,7 +126,9 @@ public class Hotbar extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		interpret.Start();
+		if (interpret.SetupSuccessful()) {
+			interpret.Start();
+		}
 	}
 	
 	public void StopBPressed() {
