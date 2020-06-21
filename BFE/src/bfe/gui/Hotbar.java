@@ -26,6 +26,7 @@ public class Hotbar extends JPanel {
 	private JTextField timeField;
 	private Editor ew;
 	private Console c;
+	private Interpreter interpret = null;
 	
 	public Hotbar(Dimension preferredSize, Editor ew, Console c) {
 		super();
@@ -127,7 +128,6 @@ public class Hotbar extends JPanel {
 		ew.HighlightString(query);
 	}
 	
-	private Interpreter interpret = null;
 	public void PlayBPressed() {
 		try {
 			if (interpret == null || !interpret.IsRunning()) {

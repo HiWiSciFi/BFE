@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
 import bfe.logic.Main;
 
@@ -16,20 +15,20 @@ public class FileSystem {
 	
 	private static File currFile = null;
 	
-	public static void NewFile(JFrame context) {
+	public static void NewFile() {
 		currFile = null;
-		context.setTitle(Main.TITLE_BASE);
+		Main.frame.setTitle(Main.TITLE_BASE);
 	}
 	
-	public static void Save(JFrame context, String data) throws IOException  {
+	public static void Save(String data) throws IOException  {
 		if (currFile == null) {
-			SaveAsDialog(context, data);
+			SaveAsDialog(data);
 		} else {
 			SaveAs(currFile, data);
 		}
 	}
 	
-	public static void SaveAsDialog(JFrame context, String data) {
+	public static void SaveAsDialog(String data) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Specify save location");
 		if (currFile == null) {
@@ -38,13 +37,13 @@ public class FileSystem {
 			fileChooser.setCurrentDirectory(new File(currFile.getAbsolutePath()));
 		}
 
-		int userSelection = fileChooser.showSaveDialog(context);
+		int userSelection = fileChooser.showSaveDialog(Main.frame);
 
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
 			File fileToSave = fileChooser.getSelectedFile();
 			try {
 				SaveAs(fileToSave, data);
-				context.setTitle(Main.TITLE_BASE + " \"" + currFile.getAbsolutePath() + "\"");
+				Main.frame.setTitle(Main.TITLE_BASE + " \"" + currFile.getAbsolutePath() + "\"");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -60,7 +59,7 @@ public class FileSystem {
 		currFile = file;
 	}
 	
-	public static String OpenDialog(JFrame context) throws IOException {
+	public static String OpenDialog() throws IOException {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Specify file to open");
 		if (currFile == null) {
@@ -68,11 +67,11 @@ public class FileSystem {
 		} else {
 			fileChooser.setCurrentDirectory(new File(currFile.getAbsolutePath()));
 		}
-		int result = fileChooser.showOpenDialog(context);
+		int result = fileChooser.showOpenDialog(Main.frame);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
 			currFile = selectedFile;
-			context.setTitle(Main.TITLE_BASE + " \"" + selectedFile.getAbsolutePath() + "\"");
+			Main.frame.setTitle(Main.TITLE_BASE + " \"" + selectedFile.getAbsolutePath() + "\"");
 			return Open(selectedFile);
 		}
 		return Main.NOTHING_SELECTED;
