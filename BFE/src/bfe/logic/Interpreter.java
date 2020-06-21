@@ -3,6 +3,7 @@ package bfe.logic;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.ReentrantLock;
 
 import bfe.gui.Console;
 import bfe.gui.Editor;
@@ -13,46 +14,34 @@ public class Interpreter {
 	private int instructionPointer = 0;
 	private int dataPointer = 0;
 	private ArrayList<Character> data = new ArrayList<Character>();
-	private String code = " ";
-	public long delay = 0l;
-	private Console c;
-	private Editor e;
+	private String code = Main.EMPTY_STRING;
+	private long delay = 0l;
 	
-	private class QueuedStep extends TimerTask {
-		@Override
-		public void run() {
-			if (NextStep() == 0) {
-				timer.schedule(new QueuedStep(), delay);
-			} else {
-				StopExecuting();
-			}
-		}
-	};
+	private Console console;
+	private Editor editor;
 	
-	public TimerTask tt = new QueuedStep();
-	public Timer timer = new Timer();
+	private boolean running = false;
+	public boolean IsRunning() { return running; }
 	
-	public Interpreter(Console c, Editor e) {
-		this.c = c;
-		this.e = e;
-	}
+	private boolean successful = true;
+	public boolean SetupSuccessful() { return successful; }
 	
-	public void StopExecuting() {
-		timer.cancel();
-		timer.purge();
-		e.SetContent(code);
-		e.SetBlocked(false);
-	}
+	private Timer timer = new Timer();
+	private boolean automaticExecutionRunning = false;
+	private Thread currentStep = null;
+	private ReentrantLock lock = new ReentrantLock();
 	
-	public int ExecuteCode(String code) {
-		if (code.length() < 1) {
-			return 2;
-		}
+	public Interpreter(Console console, Editor editor, long delay) {
+		this.console = console;
+		this.editor = editor;
+		this.delay = delay;
+		code = editor.GetCode();
+		if (code.length() <= 0) { successful = false; }
+		
 		//reset variables
 		dataPointer = 0;
 		data = new ArrayList<Character>();
 		data.add((char) 0);
-		this.code = code;
 		
 		// validate code brackets
 		int openCount = 0;
@@ -63,115 +52,189 @@ public class Interpreter {
 				openCount++;
 			} else if (c == ']') {
 				closedCount++;
-				if (openCount > closedCount) {
-					return 1;
+				if (openCount != closedCount) {
+					successful = false;
+					return;
 				}
 			}
 		}
 		if (openCount != closedCount) {
-			return 1;
+			successful = false;
+			return;
 		}
 		
 		instructionPointer = 0;
-		e.SetBlocked(true);
+		editor.SetBlocked(true);
 		MemoryInsight.Clear();
-		return 0;
+		
+		running = true;
+		StartAutomaticExecution();
 	}
 	
-	private void SetCursorPosition(int pos) {
+	private class QueuedStep extends TimerTask {
+		@Override
+		public void run() {
+			if (currentStep == null || !currentStep.isAlive()) {
+				Step();
+			}
+			lock.lock();
+			try {
+				timer.schedule(new QueuedStep(), delay);
+			} catch(Exception e) {}
+			lock.unlock();
+		}
+	}
+	
+	private void StartAutomaticExecution() {
+		if (!automaticExecutionRunning) {
+			lock.lock();
+			try {
+				timer = new Timer();
+				timer.schedule(new QueuedStep(), delay);
+			} catch(Exception e) {}
+			lock.unlock();
+			automaticExecutionRunning = true;
+		}
+	}
+	
+	private void StopAutomaticExecution() {
+		if (automaticExecutionRunning) {
+			lock.lock();
+			try {
+				timer.cancel();
+				timer.purge();
+			} catch(Exception e) {}
+			lock.unlock();
+			automaticExecutionRunning = false;
+		}
+	}
+	
+	private void SetCursorPos(int pos) {
 		StringBuffer toPush = new StringBuffer(code);
 		toPush.insert(pos, Main.EXEC_INDICATOR);
-		e.SetContent(toPush.toString());
+		editor.SetContent(toPush.toString());
 	}
 	
-	public int NextStep() {
-		boolean done = true;
-		do {
-			done = true;
-			SetCursorPosition(instructionPointer+1);
-			char instruction = code.charAt(instructionPointer);
-			if (instruction == '+') {
-				// + increment cell by one
-				data.set(dataPointer, (char) (data.get(dataPointer).charValue() + 1));
-				MemoryInsight.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
-				
-			} else if (instruction == '-') {
-				// - decrement cell by one
-				data.set(dataPointer, (char) (data.get(dataPointer).charValue() - 1));
-				MemoryInsight.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
-				
-			} else if (instruction == '<') {
-				// < decrement dataPointer by one
-				dataPointer--;
-				if (dataPointer < 0) {
-					return 2;
-				}
-				MemoryInsight.SelectMemoryCell(dataPointer);
-				
-			} else if (instruction == '>') {
-				// > increment dataPointer by one
-				dataPointer++;
-				if (dataPointer >= data.size()) {
-					data.add((char) 0);
-					MemoryInsight.AddMemoryCell();
-				}
-				MemoryInsight.SelectMemoryCell(dataPointer);
-				
-			} else if (instruction == '.') {
-				// . output current cell as ASCII
-				System.out.print(data.get(dataPointer));
-				c.Print(data.get(dataPointer).toString());
-				System.out.print("[" + (int)data.get(dataPointer) + "]");
-				
-			} else if (instruction == ',') {
-				// , wait for input (1 byte) and write to current cell (OVERWRITE)
-				
-				
-			} else if (instruction == '[') {
-				// [ if current cell = 0 jump to corresponding ]+1
-				if (data.get(dataPointer) == 0) {
-					// jump to corresponding ] -->
-					instructionPointer++;
-					int currDex = 0;
-					while (currDex > -1) {
-						char c = code.charAt(instructionPointer);
-						if (c == '[') {
-							currDex++;
-						} else if (c == ']') {
-							currDex--;
-						}
-						instructionPointer++;
-					}
-				}
-				
-			} else if (instruction == ']') {
-				// ] if current cell != 0 jump to corresponding [+1
-				if (data.get(dataPointer) != 0) {
-					// jump to corresponding [ <--
-					instructionPointer--;
-					int currDex = 0;
-					while (currDex > -1) {
-						char c = code.charAt(instructionPointer); // +++++[->+++++<]+++++[->++<]>.
-						if (c == '[') {
-							currDex--;
-						} else if (c == ']') {
-							currDex++;
-						}
-						instructionPointer--;
-					}
-				}
-				
-			} else {
-				done = false;
-			}
-			
-			instructionPointer++;
-			if (instructionPointer >= code.length()) {
-				StopExecuting();
-				return 1;
-			}
-		} while (!done);
+	public void Start() {
+		StartAutomaticExecution();
+		running = true;
+	}
+	
+	public void Stop() {
+		lock.lock();
+		try {
+			timer.cancel();
+			timer.purge();
+		} catch(Exception e) {}
+		lock.unlock();
+		editor.SetContent(code);
+		editor.SetBlocked(false);
+		running = false;
+	}
+	
+	public void Step() {
+		if (currentStep == null || !currentStep.isAlive()) {
+			(currentStep = new ThreadedStep()).start();
+		}
+	}
+	
+	private class ThreadedStep extends Thread {
+		@Override
+		public void run() {
+			NextThreadedStep();
+		}
 		
-		return 0;
+		private void NextThreadedStep() {
+			boolean done = true;
+			do {
+				done = true;
+				SetCursorPos(instructionPointer+1);
+				char instruction = code.charAt(instructionPointer);
+				if (instruction == '+') {
+					// + increment cell by one
+					data.set(dataPointer, (char) (data.get(dataPointer).charValue() + 1));
+					MemoryInsight.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
+					
+				} else if (instruction == '-') {
+					// - decrement cell by one
+					data.set(dataPointer, (char) (data.get(dataPointer).charValue() - 1));
+					MemoryInsight.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
+					
+				} else if (instruction == '<') {
+					// < decrement dataPointer by one
+					dataPointer--;
+					if (dataPointer < 0) {
+						return;
+					}
+					MemoryInsight.SelectMemoryCell(dataPointer);
+					
+				} else if (instruction == '>') {
+					// > increment dataPointer by one
+					dataPointer++;
+					if (dataPointer >= data.size()) {
+						data.add((char) 0);
+						MemoryInsight.AddMemoryCell();
+					}
+					MemoryInsight.SelectMemoryCell(dataPointer);
+					
+				} else if (instruction == '.') {
+					// . output current cell as ASCII
+					System.out.print(data.get(dataPointer).toString());
+					console.Print(data.get(dataPointer).toString());
+					
+				} else if (instruction == ',') {
+					// , wait for input (1 byte) and write to current cell (OVERWRITE)
+					while (!console.InputAvailable());
+					data.set(dataPointer, console.GetLastInput());
+					
+				} else if (instruction == '[') {
+					// [ if current cell = 0 jump to corresponding ]+1
+					if (data.get(dataPointer) == 0) {
+						// jump to corresponding ] -->
+						instructionPointer++;
+						int currDex = 0;
+						while (currDex > -1) {
+							char c = code.charAt(instructionPointer);
+							if (c == '[') {
+								currDex++;
+							} else if (c == ']') {
+								currDex--;
+							}
+							instructionPointer++;
+						}
+					}
+					
+				} else if (instruction == ']') {
+					// ] if current cell != 0 jump to corresponding [+1
+					if (data.get(dataPointer) != 0) {
+						// jump to corresponding [ <--
+						instructionPointer--;
+						int currDex = 0;
+						while (currDex > -1) {
+							char c = code.charAt(instructionPointer);
+							if (c == '[') {
+								currDex--;
+							} else if (c == ']') {
+								currDex++;
+							}
+							instructionPointer--;
+						}
+					}
+					
+				} else if (instruction == Main.BREAKPOINT_CHARACTER) {
+					StopAutomaticExecution();
+				} else {
+					done = false;
+				}
+				
+				instructionPointer++;
+				if (instructionPointer >= code.length()) {
+					Stop();
+					return;
+				}
+			} while (!done);
+			
+			return;
+		}
 	}
 }

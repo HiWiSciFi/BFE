@@ -2,6 +2,7 @@ package bfe.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
@@ -62,7 +63,20 @@ public class Hotbar extends JPanel {
 		timeField.addKeyListener(new KeyListener() {
 			@Override public void keyTyped(KeyEvent e) {  }
 			@Override public void keyPressed(KeyEvent e) { updateUI(); }
-			@Override public void keyReleased(KeyEvent e) { updateUI(); }
+			@Override public void keyReleased(KeyEvent e) {
+				String time = Main.EMPTY_STRING;
+				for (int i = 0; i < timeField.getText().length(); i++) {
+					char c = timeField.getText().charAt(i);
+					if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9') {
+						time += c;
+					}
+				}
+				if (time.length() < 1) {
+					time = 0 + Main.EMPTY_STRING;
+				}
+				timeField.setText(time);
+				updateUI();
+			}
 		});
 		hotButtonsPane.add(timeField);
 		
@@ -72,26 +86,25 @@ public class Hotbar extends JPanel {
 		stepB.AddClickListener(new ImageButtonListener() { @Override public void Preform() { StepBPressed(); }});
 		hotButtonsPane.add(stepB);
 		
-		// Find/Replace
+		// Find
 		JPanel frPane = new JPanel();
-		FlowLayout frfl = new FlowLayout();
-		frPane.setLayout(frfl);
+		frPane.setLayout(new FlowLayout());
 		this.add(frPane);
 		
-		frPane.add(new JLabel("Find:"));
+		JLabel findLabel = new JLabel("Find:");
+		frPane.add(findLabel);
 		JTextField findField = new JTextField();
+		findField.addKeyListener(new KeyListener() {
+			@Override public void keyTyped(KeyEvent e) {}
+			@Override public void keyPressed(KeyEvent e) { updateUI(); }
+			@Override public void keyReleased(KeyEvent e) { updateUI(); }
+		});
 		frPane.add(findField);
-		
-		frPane.add(new JLabel("Replace:"));
-		
-		JButton findButton = new JButton();
+		JButton findButton = new JButton("Find Next");
 		frPane.add(findButton);
-		JButton replaceButton = new JButton();
-		frPane.add(replaceButton);
 		
 		this.setBorder(new EtchedBorder());
 		
-		JPanel p = this;
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -99,51 +112,40 @@ public class Hotbar extends JPanel {
 				playB.setPreferredSize(t_buttonSize);
 				stopB.setPreferredSize(t_buttonSize);
 				stepB.setPreferredSize(t_buttonSize);
-				//updateUI();
-				SwingUtilities.updateComponentTreeUI(p);
+				timeField.setFont(new Font(timeField.getFont().getFontName(), timeField.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
+				findLabel.setFont(new Font(findLabel.getFont().getFontName(), findLabel.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
+				findField.setFont(new Font(findField.getFont().getName(), findField.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
+				findButton.setFont(new Font(findButton.getFont().getName(), findButton.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
+				SwingUtilities.updateComponentTreeUI((JPanel) e.getSource());
 			}
 		});
 	}
 	
-	// +++++[->+++++<]+++++[->++<]>.
-	Interpreter interpret = null;
+	private Interpreter interpret = null;
 	public void PlayBPressed() {
-		System.out.println("Executing code");
 		try {
-			interpret = new Interpreter(c, ew);
-			System.out.println(ew.GetCode());
-			if (interpret.ExecuteCode(ew.GetCode()) == 0) {
-				/*while (interpret.NextStep() != 1) {
-					Thread.sleep(1000);
-				}*/
-				
-				String timeText = timeField.getText();
-				String time = Main.EMPTY_STRING;
-				for (int i = 0; i < timeText.length(); i++) {
-					char c = timeText.charAt(i);
-					if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9') {
-						time += c;
-					}
-				}
-				if (time.length() < 1) {
-					time = "0";
-				}
-				timeField.setText(time);
-				interpret.delay = Long.parseLong(time);
-				interpret.tt.run();
+			if (interpret == null || !interpret.IsRunning()) {
+				interpret = new Interpreter(c, ew, Long.parseLong(timeField.getText()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		interpret.Start();
 	}
 	
 	public void StopBPressed() {
-		interpret.StopExecuting();
+		if (interpret != null) {
+			if (interpret.SetupSuccessful()) {
+				interpret.Stop();
+			}
+		}
 	}
 	
 	public void StepBPressed() {
 		if (interpret != null) {
-			interpret.NextStep();
+			if (interpret.SetupSuccessful()) {
+				interpret.Step();
+			}
 		}
 	}
 }

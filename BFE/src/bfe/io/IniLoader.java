@@ -68,15 +68,10 @@ public class IniLoader {
 	}
 	
 	private String GetVarVal(String plugin, String varname) {
-		System.out.println(plugin + ":" + varname);
-		
 		String currPlugin = null;
 		for (int s = 0; s < fileContents.length; s++) {
 			
-			System.out.println(fileContents[s]);
-			
 			if (fileContents[s].startsWith("[")) {
-				System.out.println("new plugin");
 				StringBuilder sb = new StringBuilder();
 				for (int i = 1; i < fileContents[s].length(); i++) {
 					if (fileContents[s].charAt(i) == 93) { // ascii: 93 = ]
@@ -86,10 +81,8 @@ public class IniLoader {
 					}
 				}
 				currPlugin = sb.toString();
-				System.out.println(currPlugin);
 			}
 			if (fileContents[s].startsWith(varname + " = ") && currPlugin.equals(plugin)) {
-				System.out.println("found var");
 				for (int i = 0; i < fileContents[s].length(); i++) {
 					if (fileContents[s].charAt(i) == 34) { // ascii: 34 = "
 						StringBuilder sb = new StringBuilder();

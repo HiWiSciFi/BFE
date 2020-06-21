@@ -35,8 +35,6 @@ public class Main {
 	public static final String EMPTY_STRING = "";
 	public static final String EXEC_INDICATOR = "|";
 	public static final String TITLE_BASE = "Brainf*** Editor";
-	
-	// +++++[->++<]>[-<++++++>]<+++++.
 
 	private static JFrame frame;
 	
