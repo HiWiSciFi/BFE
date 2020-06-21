@@ -8,7 +8,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -27,6 +26,7 @@ public class Hotbar extends JPanel {
 	private JTextField timeField;
 	private Editor ew;
 	private Console c;
+	private Interpreter interpret = null;
 	
 	public Hotbar(Dimension preferredSize, Editor ew, Console c) {
 		super();
@@ -96,12 +96,16 @@ public class Hotbar extends JPanel {
 		JTextField findField = new JTextField();
 		findField.addKeyListener(new KeyListener() {
 			@Override public void keyTyped(KeyEvent e) {}
-			@Override public void keyPressed(KeyEvent e) { updateUI(); }
-			@Override public void keyReleased(KeyEvent e) { updateUI(); }
+			@Override public void keyPressed(KeyEvent e) {
+				HighlightString(findField.getText());
+				updateUI();
+			}
+			@Override public void keyReleased(KeyEvent e) {
+				HighlightString(findField.getText());
+				updateUI();
+			}
 		});
 		frPane.add(findField);
-		JButton findButton = new JButton("Find Next");
-		frPane.add(findButton);
 		
 		this.setBorder(new EtchedBorder());
 		
@@ -115,13 +119,15 @@ public class Hotbar extends JPanel {
 				timeField.setFont(new Font(timeField.getFont().getFontName(), timeField.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
 				findLabel.setFont(new Font(findLabel.getFont().getFontName(), findLabel.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
 				findField.setFont(new Font(findField.getFont().getName(), findField.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
-				findButton.setFont(new Font(findButton.getFont().getName(), findButton.getFont().getStyle(), (int)(t_buttonSize.height * 0.5f)));
 				SwingUtilities.updateComponentTreeUI((JPanel) e.getSource());
 			}
 		});
 	}
 	
-	private Interpreter interpret = null;
+	private void HighlightString(String query) {
+		ew.HighlightString(query);
+	}
+	
 	public void PlayBPressed() {
 		try {
 			if (interpret == null || !interpret.IsRunning()) {
@@ -130,7 +136,9 @@ public class Hotbar extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		interpret.Start();
+		if (interpret.SetupSuccessful()) {
+			interpret.Start();
+		}
 	}
 	
 	public void StopBPressed() {

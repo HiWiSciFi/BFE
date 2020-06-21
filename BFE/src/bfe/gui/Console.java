@@ -94,7 +94,6 @@ public class Console extends JPanel {
 				inputVal = input.getText().charAt(0);
 				input.setText(Main.EMPTY_STRING);
 				inputAvailable = true;
-				System.out.println("input available");
 			}
 		});
 	}

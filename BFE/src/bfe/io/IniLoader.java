@@ -28,6 +28,10 @@ public class IniLoader {
 	
 	public IniLoader(String path) throws IOException {
 		this.path = path;
+		reloadFile();
+	}
+	
+	public void reloadFile() throws IOException {
 		FileReader fileReader = new FileReader(path);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         List<String> lines = new ArrayList<String>();
@@ -48,7 +52,9 @@ public class IniLoader {
             	valuesToSave.add(new ArrayList<String>() {private static final long serialVersionUID = 1L;{add(sb.toString());}});
             	currPlID = valuesToSave.size()-1;
             } else {
-            	valuesToSave.get(currPlID).add(line);
+            	if (valuesToSave.size() > 0) {
+            		valuesToSave.get(currPlID).add(line);
+            	}
             }
         }
         bufferedReader.close();
@@ -104,7 +110,7 @@ public class IniLoader {
 	public void Save(String plugin, String varname, String value) {
 		int pluginID = -1;
 		for (int i = 0; i < valuesToSave.size(); i++) {
-			if (valuesToSave.get(i).get(0) == plugin) {
+			if (valuesToSave.get(i).get(0).equals(plugin)) {
 				pluginID = i;
 			}
 		}

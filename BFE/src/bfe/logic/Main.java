@@ -25,36 +25,28 @@ import bfe.gui.Hotbar;
 import bfe.gui.MemoryInsight;
 import bfe.gui.MenuBar;
 import bfe.gui.Preferences;
-import bfe.io.IniLoader;
 
 public class Main {
 	
-	public static final String VERSION = "1.1-beta";
+	public static final String VERSION = "1.1";
 	public static final String NOTHING_SELECTED = "8e3242f8-23f5-4c28-b25b-ab802725d71a";
 	public static final char BREAKPOINT_CHARACTER = '!';
 	public static final String EMPTY_STRING = "";
 	public static final String EXEC_INDICATOR = "|";
 	public static final String TITLE_BASE = "Brainf*** Editor";
 
-	private static JFrame frame;
+	public static JFrame frame;
 	
 	private static int width = 800;
 	private static int height = 500;
-
-	private static IniLoader prefsFile;
-	private static final String pluginIniName = "BFE";
+	
+	public static final String pluginIniName = "BFE";
 
 	public static void main(String[] args) {
 		Preferences.Init();
 		MemoryInsight.Init();
 		ASCIITable.Init();
 		About.Init();
-
-		try {
-			prefsFile = new IniLoader("data/prefs.ini");
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
 
 		frame = new JFrame(TITLE_BASE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,7 +76,7 @@ public class Main {
 		Console c = new Console();
 		c.SetOutputColorScheme(Color.black, Color.white);
 		Hotbar hotbar = new Hotbar(
-				new Dimension(width, (int) (height * prefsFile.ReadSingle(pluginIniName, "HotbarVerticalPercentage"))),
+				new Dimension(width, (int) (height * Preferences.HotbarVerticalPercentage())),
 				ew, c);
 		
 		MenuBar menuBar = new MenuBar(ew);
@@ -100,10 +92,10 @@ public class Main {
 				width = frame.getWidth();
 				height = frame.getHeight();
 				c.setPreferredSize(new Dimension(
-						(int) (width * prefsFile.ReadSingle(pluginIniName, "ConsoleHorizontalPercentage")),
-						height - ((int) (height * prefsFile.ReadSingle(pluginIniName, "HotbarVerticalPercentage")))));
+						(int) (width * Preferences.ConsoleHorizontalPercentage()),
+						height - ((int) (height * Preferences.HotbarVerticalPercentage()))));
 				hotbar.setPreferredSize(new Dimension(width,
-						(int) (height * prefsFile.ReadSingle(pluginIniName, "HotbarVerticalPercentage"))));
+						(int) (height * Preferences.HotbarVerticalPercentage())));
 				SwingUtilities.updateComponentTreeUI(frame);
 			}
 		});

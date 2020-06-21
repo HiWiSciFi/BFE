@@ -7,12 +7,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 
 import bfe.io.FileSystem;
 import bfe.logic.Main;
@@ -122,19 +120,19 @@ public class MenuBar extends JMenuBar implements ActionListener {
 				}
 			}
 		} else if (trigger == file_saveas) {
-			FileSystem.SaveAsDialog((JFrame) SwingUtilities.getWindowAncestor(this), ew.GetCode());
+			FileSystem.SaveAsDialog(ew.GetCode());
 		} else if (trigger == file_save) {
 			try {
-				FileSystem.Save((JFrame) SwingUtilities.getWindowAncestor(this), ew.GetCode());
+				FileSystem.Save(ew.GetCode());
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		} else if (trigger == file_new) {
-			FileSystem.NewFile((JFrame) SwingUtilities.getWindowAncestor(this));
+			FileSystem.NewFile();
 			ew.SetContent(Main.EMPTY_STRING);
 		} else if (trigger == file_open) {
 			try {
-				String result = FileSystem.OpenDialog((JFrame) SwingUtilities.getWindowAncestor(this));
+				String result = FileSystem.OpenDialog();
 				if (result != Main.NOTHING_SELECTED) {
 					ew.SetContent(result);
 				}
