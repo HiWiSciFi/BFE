@@ -21,9 +21,17 @@ public class Interpreter {
 	private Editor editor;
 	
 	private boolean running = false;
+	/**
+	 * Is the interpreter running?
+	 * @return True, if the interpreter has been started but not yet stopped
+	*/
 	public boolean IsRunning() { return running; }
 	
 	private boolean successful = true;
+	/**
+	 * Was the initial setup successful
+	 * @return True, if the initial setup did not throw any errors
+	 */
 	public boolean SetupSuccessful() { return successful; }
 	
 	private Timer timer = new Timer();
@@ -31,6 +39,12 @@ public class Interpreter {
 	private Thread currentStep = null;
 	private ReentrantLock lock = new ReentrantLock();
 	
+	/**
+	 * 
+	 * @param console reference to the console in the editor window
+	 * @param editor reference to the texteditor in the editor window
+	 * @param delay the delay to wait between steps when using automatic execution
+	 */
 	public Interpreter(Console console, Editor editor, long delay) {
 		this.console = console;
 		this.editor = editor;
@@ -85,6 +99,9 @@ public class Interpreter {
 		}
 	}
 	
+	/**
+	 * Starts the automatic code stepping
+	 */
 	private void StartAutomaticExecution() {
 		if (!automaticExecutionRunning) {
 			lock.lock();
@@ -97,6 +114,9 @@ public class Interpreter {
 		}
 	}
 	
+	/**
+	 * stops the automatic code stepping
+	 */
 	private void StopAutomaticExecution() {
 		if (automaticExecutionRunning) {
 			lock.lock();
@@ -109,12 +129,19 @@ public class Interpreter {
 		}
 	}
 	
+	/**
+	 * set the execIndicator position in the code
+	 * @param pos the position to set the cursor to
+	 */
 	private void SetCursorPos(int pos) {
 		StringBuffer toPush = new StringBuffer(code);
 		toPush.insert(pos, Main.EXEC_INDICATOR);
 		editor.SetContent(toPush.toString());
 	}
 	
+	/**
+	 * Start automatic execution
+	 */
 	public void Start() {
 		StartAutomaticExecution();
 		running = true;

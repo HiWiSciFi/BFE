@@ -16,11 +16,11 @@ public class MemoryCell extends JPanel {
 
 	private JLabel hex;
 	private JLabel dec;
-	private BoxLayout gl;
 
 	public MemoryCell() {
 		super();
-
+		
+		BoxLayout gl;
 		gl = new BoxLayout(this, BoxLayout.PAGE_AXIS);
 		this.setLayout(gl);
 
