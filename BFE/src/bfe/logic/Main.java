@@ -25,6 +25,7 @@ import bfe.gui.Hotbar;
 import bfe.gui.MemoryInsight;
 import bfe.gui.MenuBar;
 import bfe.gui.Preferences;
+import bfe.io.FileSystem;
 
 public class Main {
 	
@@ -43,10 +44,11 @@ public class Main {
 	public static final String pluginIniName = "BFE";
 
 	public static void main(String[] args) {
-		Preferences.Init();
-		MemoryInsight.Init();
-		ASCIITable.Init();
-		About.Init();
+		new FileSystem();
+		new Preferences();
+		new MemoryInsight();
+		new ASCIITable();
+		new About();
 
 		frame = new JFrame(TITLE_BASE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +78,7 @@ public class Main {
 		Console c = new Console();
 		c.SetOutputColorScheme(Color.black, Color.white);
 		Hotbar hotbar = new Hotbar(
-				new Dimension(width, (int) (height * Preferences.HotbarVerticalPercentage())),
+				new Dimension(width, (int) (height * Preferences.instance.HotbarVerticalPercentage())),
 				ew, c);
 		
 		MenuBar menuBar = new MenuBar(ew);
@@ -92,10 +94,10 @@ public class Main {
 				width = frame.getWidth();
 				height = frame.getHeight();
 				c.setPreferredSize(new Dimension(
-						(int) (width * Preferences.ConsoleHorizontalPercentage()),
-						height - ((int) (height * Preferences.HotbarVerticalPercentage()))));
+						(int) (width * Preferences.instance.ConsoleHorizontalPercentage()),
+						height - ((int) (height * Preferences.instance.HotbarVerticalPercentage()))));
 				hotbar.setPreferredSize(new Dimension(width,
-						(int) (height * Preferences.HotbarVerticalPercentage())));
+						(int) (height * Preferences.instance.HotbarVerticalPercentage())));
 				SwingUtilities.updateComponentTreeUI(frame);
 			}
 		});

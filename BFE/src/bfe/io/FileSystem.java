@@ -13,14 +13,24 @@ import bfe.logic.Main;
 
 public class FileSystem {
 	
-	private static File currFile = null;
+	public static FileSystem instance;
 	
-	public static void NewFile() {
+	public FileSystem() {
+		if (instance == null) {
+			instance = this;
+		} else {
+			return;
+		}
+	}
+	
+	private File currFile = null;
+	
+	public void NewFile() {
 		currFile = null;
 		Main.frame.setTitle(Main.TITLE_BASE);
 	}
 	
-	public static void Save(String data) throws IOException  {
+	public void Save(String data) throws IOException  {
 		if (currFile == null) {
 			SaveAsDialog(data);
 		} else {
@@ -28,7 +38,7 @@ public class FileSystem {
 		}
 	}
 	
-	public static void SaveAsDialog(String data) {
+	public void SaveAsDialog(String data) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Specify save location");
 		if (currFile == null) {
@@ -50,7 +60,7 @@ public class FileSystem {
 		}
 	}
 	
-	private static void SaveAs(File file, String data) throws IOException {
+	private void SaveAs(File file, String data) throws IOException {
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(data);
@@ -59,7 +69,7 @@ public class FileSystem {
 		currFile = file;
 	}
 	
-	public static String OpenDialog() throws IOException {
+	public String OpenDialog() throws IOException {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Specify file to open");
 		if (currFile == null) {
@@ -77,7 +87,7 @@ public class FileSystem {
 		return Main.NOTHING_SELECTED;
 	}
 	
-	private static String Open(File file) throws IOException {
+	private String Open(File file) throws IOException {
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
 		StringBuilder sb = new StringBuilder();

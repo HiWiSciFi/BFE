@@ -79,7 +79,7 @@ public class Interpreter {
 		
 		instructionPointer = 0;
 		editor.SetBlocked(true);
-		MemoryInsight.Clear();
+		MemoryInsight.instance.Clear();
 		
 		running = true;
 		StartAutomaticExecution();
@@ -180,12 +180,12 @@ public class Interpreter {
 				if (instruction == '+') {
 					// + increment cell by one
 					data.set(dataPointer, (char) (data.get(dataPointer).charValue() + 1));
-					MemoryInsight.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
+					MemoryInsight.instance.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
 					
 				} else if (instruction == '-') {
 					// - decrement cell by one
 					data.set(dataPointer, (char) (data.get(dataPointer).charValue() - 1));
-					MemoryInsight.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
+					MemoryInsight.instance.SetMemoryCell(dataPointer, data.get(dataPointer).charValue());
 					
 				} else if (instruction == '<') {
 					// < decrement dataPointer by one
@@ -193,16 +193,16 @@ public class Interpreter {
 					if (dataPointer < 0) {
 						return;
 					}
-					MemoryInsight.SelectMemoryCell(dataPointer);
+					MemoryInsight.instance.SelectMemoryCell(dataPointer);
 					
 				} else if (instruction == '>') {
 					// > increment dataPointer by one
 					dataPointer++;
 					if (dataPointer >= data.size()) {
 						data.add((char) 0);
-						MemoryInsight.AddMemoryCell();
+						MemoryInsight.instance.AddMemoryCell();
 					}
-					MemoryInsight.SelectMemoryCell(dataPointer);
+					MemoryInsight.instance.SelectMemoryCell(dataPointer);
 					
 				} else if (instruction == '.') {
 					// . output current cell as ASCII

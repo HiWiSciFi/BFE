@@ -18,12 +18,14 @@ import bfe.logic.Main;
 
 public class ASCIITable {
 	
-	private static JFrame frame;
+	public static ASCIITable instance;
+	
+	private JFrame frame;
 	private static final int width = 300;
 	private static final int height = 500;
 	
-	private static JTextField inputField = new JTextField();
-	private static JLabel queueResult = new JLabel();
+	private JTextField inputField = new JTextField();
+	private JLabel queueResult = new JLabel();
 	
 	private static final String asciiTableStart = "decimal\tASCII\r\n"
 			+ "-----------------------------------------------------\r\n"
@@ -62,7 +64,12 @@ public class ASCIITable {
 			+ "32\tSPACE\r\n";
 	private static final String asciiTableEnd = "127\tDEL";
 	
-	public static void Init() {
+	public ASCIITable() {
+		if (instance == null) {
+			instance = this;
+		} else {
+			return;
+		}
 		frame = new JFrame("ASCII Table");
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setResizable(true);
@@ -108,7 +115,7 @@ public class ASCIITable {
 		panel.add(jsp, BorderLayout.CENTER);
 	}
 	
-	public static void Show() {
+	public void Show() {
 		if (frame.isVisible()) {
 			frame.toFront();
 			frame.requestFocus();

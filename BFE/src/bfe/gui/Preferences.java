@@ -22,25 +22,32 @@ import bfe.logic.Main;
 
 public class Preferences {
 	
-	private static JFrame frame;
+	public static Preferences instance;
+	
+	private JFrame frame;
 	
 	private static int width = 300;
 	private static int height = 300;
 	
-	private static IniLoader prefsFile;
+	private IniLoader prefsFile;
 	
-	private static JTextField consoleHorizontalInput;
-	private static JTextField hotbarVerticalInput;
+	private JTextField consoleHorizontalInput;
+	private JTextField hotbarVerticalInput;
 	
-	public static float HotbarVerticalPercentage() {
+	public float HotbarVerticalPercentage() {
 		return prefsFile.ReadSingle(Main.pluginIniName, "HotbarVerticalPercentage");
 	}
 	
-	public static float ConsoleHorizontalPercentage() {
+	public float ConsoleHorizontalPercentage() {
 		return prefsFile.ReadSingle(Main.pluginIniName, "ConsoleHorizontalPercentage");
 	}
 	
-	public static void Init() {
+	public Preferences() {
+		if (instance == null) {
+			instance = this;
+		} else {
+			return;
+		}
 		frame = new JFrame("Preferences");
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setResizable(false);
@@ -131,7 +138,7 @@ public class Preferences {
 		frame.pack();
 	}
 	
-	private static void Save() {
+	private void Save() {
 		prefsFile.Save(Main.pluginIniName, "HotbarVerticalPercentage", (Float.parseFloat(hotbarVerticalInput.getText())/100.0f) + Main.EMPTY_STRING);
 		prefsFile.Save(Main.pluginIniName, "ConsoleHorizontalPercentage", (Float.parseFloat(consoleHorizontalInput.getText())/100.0f) + Main.EMPTY_STRING);
 		try {
@@ -139,18 +146,18 @@ public class Preferences {
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
-	private static void Reload() {
+	private void Reload() {
 		try { prefsFile.reloadFile(); } catch (IOException e) {}
 		hotbarVerticalInput.setText(HotbarVerticalPercentage()*100 + Main.EMPTY_STRING);
 		consoleHorizontalInput.setText(ConsoleHorizontalPercentage()*100 + Main.EMPTY_STRING);
 	}
 	
-	private static void RevertToDefault() {
+	private void RevertToDefault() {
 		consoleHorizontalInput.setText(ConsoleHorizontalPercentage()*100 + Main.EMPTY_STRING);
 		consoleHorizontalInput.setText(ConsoleHorizontalPercentage()*100 + Main.EMPTY_STRING);
 	}
 	
-	public static void Show() {
+	public void Show() {
 		if (frame.isVisible()) {
 			frame.toFront();
 			frame.requestFocus();

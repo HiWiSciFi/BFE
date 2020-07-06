@@ -12,18 +12,25 @@ import bfe.logic.Main;
 
 public class About {
 	
-	private static JFrame frame;
+	public static About instance;
+	
+	private JFrame frame;
 	private static final int width = 300;
 	private static final int height = 500;
 	
-	private static final String aboutString = "Brainfuck Editor version \"" + Main.VERSION + "\"\r\n"
+	private final String aboutString = "Brainfuck Editor version \"" + Main.VERSION + "\"\r\n"
 			+ "License: CC BY-NC-ND\r\n"
 			+ "by Max Hager\r\n"
 			+ "More information at https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode\r\n"
 			+ "This project has been made and distributed as part of a school task during the IT lesson.\r\n"
 			+ "This program is not going to be ported to other platforms or another programming language by the original author.";
 	
-	public static void Init() {
+	public About() {
+		if (instance == null) {
+			instance = this;
+		} else {
+			return;
+		}
 		frame = new JFrame("About");
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setResizable(false);
@@ -43,7 +50,7 @@ public class About {
 		frame.pack();
 	}
 	
-	public static void Show() {
+	public void Show() {
 		if (frame.isVisible()) {
 			frame.toFront();
 			frame.requestFocus();

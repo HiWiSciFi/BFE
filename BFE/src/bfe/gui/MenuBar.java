@@ -102,13 +102,13 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object trigger = e.getSource();
 		if (trigger == preferences) {
-			Preferences.Show();
+			Preferences.instance.Show();
 		} else if (trigger == openDbg) {
-			MemoryInsight.Show();
+			MemoryInsight.instance.Show();
 		} else if (trigger == asciiTable) {
-			ASCIITable.Show();
+			ASCIITable.instance.Show();
 		} else if (trigger == about) {
-			About.Show();
+			About.instance.Show();
 		} else if (trigger == learn) {
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				try {
@@ -120,19 +120,19 @@ public class MenuBar extends JMenuBar implements ActionListener {
 				}
 			}
 		} else if (trigger == file_saveas) {
-			FileSystem.SaveAsDialog(ew.GetCode());
+			FileSystem.instance.SaveAsDialog(ew.GetCode());
 		} else if (trigger == file_save) {
 			try {
-				FileSystem.Save(ew.GetCode());
+				FileSystem.instance.Save(ew.GetCode());
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		} else if (trigger == file_new) {
-			FileSystem.NewFile();
+			FileSystem.instance.NewFile();
 			ew.SetContent(Main.EMPTY_STRING);
 		} else if (trigger == file_open) {
 			try {
-				String result = FileSystem.OpenDialog();
+				String result = FileSystem.instance.OpenDialog();
 				if (result != Main.NOTHING_SELECTED) {
 					ew.SetContent(result);
 				}
